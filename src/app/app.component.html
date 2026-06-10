@@ -1,0 +1,350 @@
+@if (currentPage === 'home') {
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Inicio">
+      <img src="assets/logo.png" alt="Logo" />
+    </a>
+
+    <nav class="main-nav" aria-label="Principal">
+      <a class="home-link" href="#inicio" aria-label="Volver al inicio"><svg class="home-icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg></a>
+      <a href="#enfoque">Enfoque</a>
+      <a href="#background">Background</a>
+      <a href="#ambitos">Ámbitos</a>
+      <a href="#proposito">Propósito</a>
+    </nav>
+
+    <button class="nav-cta" type="button" (click)="openPrivateArea()">Acceso clientes</button>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero-section">
+      <div class="hero-copy">
+        <p class="eyebrow">Bienvenida/o a este espacio</p>
+        <h1>Un espacio para detenerte, tomar perspectiva y avanzar con claridad.</h1>
+        <p class="hero-text">
+          Hay momentos en la vida profesional y personal en los que necesitamos detenernos y tomar perspectiva.
+          A veces se trata de una decisión importante, de una etapa de cambio, de una promoción, de una transición
+          profesional o de recuperar claridad en medio de la exigencia diaria.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#enfoque">Conocer el enfoque</a>
+        </div>
+        <div class="hero-proof" aria-label="Datos destacados">
+          <span>Personas y organizaciones</span>
+          <span>Coaching integral</span>
+          <span>Life & Executive Coach</span>
+        </div>
+      </div>
+
+      <div class="hero-portrait" aria-label="Retrato profesional de la coach">
+        @if (photoAvailable) {
+          <img
+            src="assets/coach-profile.jpg"
+            alt="Retrato profesional de la coach"
+            (error)="onPhotoError()"
+          />
+        }
+        <div class="portrait-fallback" aria-hidden="true">
+          <span>Retrato profesional</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="enfoque" class="intro-section">
+      <div class="intro-copy">
+        <p class="eyebrow">Mi enfoque</p>
+        <h2>Reflexión útil, práctica y orientada a la acción.</h2>
+      </div>
+
+      <div class="intro-text">
+        <p>
+          Desde el coaching, ofrezco un espacio donde cada persona puede ampliar su mirada,
+          reconocer sus recursos y avanzar con mayor claridad hacia sus objetivos.
+        </p>
+        <p>
+          Este espacio nace para acompañar a personas y organizaciones en momentos de decisión,
+          cambio o transición, combinando escucha, estructura y sentido práctico.
+        </p>
+      </div>
+    </section>
+
+    <section class="method-section">
+      <div class="section-heading">
+        <p class="eyebrow">Cómo trabajamos</p>
+        <h2>Un proceso que ordena la mirada y facilita el avance.</h2>
+      </div>
+
+      <div class="service-grid">
+        @for (item of approachItems; track item.title) {
+          <article class="service-card">
+            <span class="service-icon">{{ item.icon }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="background" class="background-section">
+      <div class="background-copy">
+        <p class="eyebrow">Background académico y profesional</p>
+        <h2>Psicología, organizaciones y experiencia directiva en recursos humanos.</h2>
+        <p>
+          Mi recorrido profesional combina una sólida experiencia en entornos corporativos, con un alto componente
+          relacional, comercial y de gestión directiva en el área de recursos humanos.
+        </p>
+        <p>
+          Esta combinación de formación psicológica y experiencia práctica empresarial me permite ofrecer un
+          acompañamiento consistente, cercano y adaptado a la realidad de cada persona, equipo u organización.
+        </p>
+      </div>
+
+      <div class="credential-list" aria-label="Formación destacada">
+        @for (credential of credentials; track credential) {
+          <article>
+            <span></span>
+            <p>{{ credential }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="ambitos" class="focus-section">
+      <div class="focus-heading">
+        <p class="eyebrow">Ámbitos de acompañamiento</p>
+        <h2>Acompañamiento para liderazgo, talento y cambio vital.</h2>
+      </div>
+
+      <div class="focus-grid">
+        @for (area of focusAreas; track area) {
+          <article>
+            <span></span>
+            <p>{{ area }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="proposito" class="purpose-section">
+      <p class="eyebrow">Propósito</p>
+      <blockquote>
+        Acompañarte con rigor, sensibilidad y sentido práctico para crear un espacio de confianza desde el que puedas
+        tomar perspectiva, reconocer tus recursos y avanzar con mayor claridad hacia aquello que te propones construir.
+      </blockquote>
+    </section>
+
+    <section class="private-callout">
+      <div>
+        <p class="eyebrow">Clientes registrados</p>
+        <h2>Gestiona tus sesiones desde un área privada.</h2>
+        <p>
+          Las reservas, notas personales y valoraciones posteriores se consultan en una pantalla de trabajo independiente.
+        </p>
+      </div>
+      <button class="button primary" type="button" (click)="openPrivateArea()">
+        Entrar al área privada
+      </button>
+    </section>
+
+    <section id="valoraciones" class="testimonials-section">
+      <div class="section-heading">
+        <p class="eyebrow">Valoraciones</p>
+        <h2>Opiniones de clientes.</h2>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="rating" aria-label="Cinco estrellas">*****</p>
+        <blockquote>{{ activeTestimonial.quote }}</blockquote>
+        <div class="testimonial-footer">
+          <strong>{{ activeTestimonial.name }}</strong>
+          <span>{{ activeTestimonial.context }}</span>
+        </div>
+        <div class="testimonial-controls">
+          @for (testimonial of testimonials; track testimonial.name; let index = $index) {
+            <button
+              type="button"
+              [class.active]="index === activeTestimonialIndex"
+              (click)="activeTestimonialIndex = index"
+              [attr.aria-label]="'Valoración ' + (index + 1)"
+            ></button>
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+} @else {
+  <main class="client-page">
+    <header class="client-topbar">
+      <div>
+        <p class="eyebrow">Área privada</p>
+        <h1>Reserva de sesiones</h1>
+      </div>
+
+      <button class="home-link" type="button" (click)="goHome()" aria-label="Volver al home"><svg class="home-icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg></button>
+    </header>
+
+    <section class="client-workspace">
+      <aside class="client-panel">
+        <h3>Franjas y precios</h3>
+        <p>Los colores se aplican a cada hora disponible, no al día completo.</p>
+
+        <div class="price-legend" aria-label="Leyenda de precios">
+          <button
+            type="button"
+            class="legend-item"
+            [class.active]="selectedTier === 'Todas'"
+            (click)="selectedTier = 'Todas'"
+          >
+            <span class="legend-color all"></span>
+            <span>Todas</span>
+            <strong></strong>
+          </button>
+
+          @for (tier of priceTiers; track tier.name) {
+            <button
+              type="button"
+              class="legend-item"
+              [class.active]="selectedTier === tier.name"
+              (click)="selectedTier = selectedTier === tier.name ? 'Todas' : tier.name"
+            >
+              <span class="legend-color" [style.background]="tier.color"></span>
+              <span>{{ tier.name }}</span>
+              <strong>{{ tier.price }} EUR</strong>
+            </button>
+          }
+        </div>
+      </aside>
+
+      <div class="calendar-board" aria-label="Calendario de disponibilidad">
+        <div class="calendar-toolbar">
+          <button class="icon-button" type="button" (click)="previousMonth()" [disabled]="currentMonthIndex === 0" aria-label="Mes anterior">
+            &lt;
+          </button>
+          <div>
+            <p class="eyebrow">Calendario sesiones disponibles</p>
+            <h3>{{ months[currentMonthIndex].label }}</h3>
+          </div>
+          <button class="icon-button" type="button" (click)="nextMonth()" [disabled]="currentMonthIndex === months.length - 1" aria-label="Mes siguiente">
+            &gt;
+          </button>
+        </div>
+
+        <div class="weekday-grid" aria-hidden="true">
+          @for (day of weekDays; track day) {
+            <span>{{ day }}</span>
+          }
+        </div>
+
+        <div class="month-grid">
+          @for (day of visibleDays; track day.key) {
+            <button
+              type="button"
+              class="day-cell"
+              [class.muted]="!day.inMonth"
+              [class.has-slots]="day.slots.length > 0"
+              [class.selected]="selectedDate === day.key"
+              (click)="selectDate(day)"
+              [disabled]="day.slots.length === 0"
+            >
+              <span>{{ day.date.getDate() }}</span>
+              @if (day.slots.length > 0) {
+                <i class="availability-mark" aria-hidden="true"></i>
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      <aside class="slot-panel">
+        <h3>{{ selectedDateLabel }}</h3>
+        <p class="panel-intro">Todas las horas disponibles para este día.</p>
+
+        @if (selectedSlots.length) {
+          <div class="slot-list">
+            @for (slot of selectedSlots; track slot.id) {
+              <button
+                type="button"
+                class="slot-row"
+                [class.selected]="reservedSlotId === slot.id"
+                (click)="reserve(slot)"
+              >
+                <span class="slot-price-color" [style.background]="slot.color"></span>
+                <span>
+                  <strong>{{ slot.time }}</strong>
+                  <small>{{ slot.tier }}</small>
+                </span>
+                <strong>{{ slot.price }} EUR</strong>
+              </button>
+            }
+          </div>
+        } @else {
+          <p class="empty-state">Selecciona un día disponible.</p>
+        }
+
+        @if (reservationMessage) {
+          <p class="status-message success">{{ reservationMessage }}</p>
+        }
+
+        <div class="next-session-card">
+          <h4>Próxima sesión</h4>
+
+          @if (nextSession) {
+            <p class="next-session-date">{{ nextSessionLabel }}</p>
+            <p class="next-session-meta">Coach: Mónica Nadal</p>
+            <p class="next-session-meta">Coachee: Marta García</p>
+            <p class="next-session-status">Estado: Confirmada</p>
+            <button class="button primary full" type="button" [disabled]="!canEnterNextSession">
+              Entrar a la sesión
+            </button>
+            <button class="button secondary full" type="button" [disabled]="!canCancelNextSession" (click)="requestCancelNextSession()">
+              Cancelar cita
+            </button>
+            <p class="session-policy">
+              Puedes cancelar la cita hasta 24 horas antes. Si se cancela después de ese plazo, la sesión se cobrará igualmente.
+            </p>
+          } @else {
+            <p class="empty-state">Sin citas próximas.</p>
+          }
+        </div>
+      </aside>
+    </section>
+  </main>
+
+
+  @if (cancellationPending && nextSession) {
+    <div class="modal-backdrop" role="presentation" (click)="dismissCancelNextSession()">
+      <section class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="cancel-title" (click)="$event.stopPropagation()">
+        <p class="eyebrow">Cancelar cita</p>
+        <h2 id="cancel-title">¿Quieres cancelar esta cita?</h2>
+        <p>
+          {{ nextSessionLabel }} con Mónica Nadal.
+        </p>
+        <p>
+          Puedes cancelar hasta 24 horas antes. Si se cancela después de ese plazo, la sesión se cobrará igualmente.
+        </p>
+
+        <div class="dialog-actions">
+          <button class="button secondary" type="button" (click)="dismissCancelNextSession()">Mantener cita</button>
+          <button class="button primary" type="button" (click)="confirmCancelNextSession()">Confirmar cancelación</button>
+        </div>
+      </section>
+    </div>
+  }
+  @if (pendingSlot) {
+    <div class="modal-backdrop" role="presentation" (click)="cancelReservation()">
+      <section class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title" (click)="$event.stopPropagation()">
+        <p class="eyebrow">Confirmar reserva</p>
+        <h2 id="confirm-title">Vas a reservar esta hora</h2>
+        <p>
+          {{ selectedDateLabel }} a las {{ pendingSlot.time }}, con tarifa
+          {{ pendingSlot.tier }} de {{ pendingSlot.price }} EUR.
+        </p>
+        <p>¿Estás conforme con esta reserva?</p>
+
+        <div class="dialog-actions">
+          <button class="button secondary" type="button" (click)="cancelReservation()">Cancelar</button>
+          <button class="button primary" type="button" (click)="confirmReservation()">Confirmar reserva</button>
+        </div>
+      </section>
+    </div>
+  }
+}
