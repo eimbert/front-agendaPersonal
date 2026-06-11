@@ -113,6 +113,143 @@ export class AppComponent {
     },
   ];
 
+
+  readonly deskFolders = [
+    {
+      id: 'sessions',
+      title: 'Mis sesiones',
+      description: 'Histórico, coste y observaciones',
+      count: '6',
+    },
+    {
+      id: 'notes',
+      title: 'Mis notas',
+      description: 'Anotaciones privadas por fecha',
+      count: '4',
+    },
+    {
+      id: 'contracts',
+      title: 'Acuerdo de acompañamiento',
+      description: 'PDF, objetivos y sesiones previstas',
+      count: '2',
+    },
+    {
+      id: 'goals',
+      title: 'Objetivos y seguimiento',
+      description: 'Acciones acordadas entre sesiones',
+      count: '5',
+    },
+  ];
+
+  readonly sessionRecords = [
+    {
+      date: '12/06/2026',
+      time: '17:00',
+      cost: '75 EUR',
+      agreementTitle: 'Transición profesional',
+      observations: 'Revisar opciones de cambio y preparar conversación con dirección.',
+    },
+    {
+      date: '29/05/2026',
+      time: '11:00',
+      cost: '55 EUR',
+      agreementTitle: 'Transición profesional',
+      observations: 'Identificación de recursos personales y primeras acciones de foco.',
+    },
+    {
+      date: '15/05/2026',
+      time: '18:00',
+      cost: '95 EUR',
+      agreementTitle: 'Liderazgo y prioridades',
+      observations: 'Trabajo sobre límites, delegación y preparación de reunión de equipo.',
+    },
+    {
+      date: '24/04/2026',
+      time: '09:30',
+      cost: '55 EUR',
+      agreementTitle: 'Liderazgo y prioridades',
+      observations: 'Ordenar prioridades de la semana y distinguir urgencias de decisiones relevantes.',
+    },
+    {
+      date: '10/04/2026',
+      time: '12:30',
+      cost: '95 EUR',
+      agreementTitle: 'Cambio vital',
+      observations: 'Explorar el impacto personal del cambio y definir señales de avance realistas.',
+    },
+    {
+      date: '27/03/2026',
+      time: '11:00',
+      cost: '75 EUR',
+      agreementTitle: 'Cambio vital',
+      observations: 'Primera revisión de objetivos, expectativas del proceso y compromiso entre sesiones.',
+    },
+  ];
+
+  readonly noteRecords = [
+    {
+      date: '12/06/2026',
+      text: 'Salgo con más claridad sobre el siguiente paso. Necesito concretar qué conversaciones evitaré posponer.',
+    },
+    {
+      date: '29/05/2026',
+      text: 'Detecto que el bloqueo principal no es técnico sino de confianza en la decisión.',
+    },
+    {
+      date: '15/05/2026',
+      text: 'Me llevo como tarea observar cuándo digo sí por inercia.',
+    },
+    {
+      date: '24/04/2026',
+      text: 'Quiero observar mejor qué decisiones me dan energía y cuáles sostengo solo por costumbre.',
+    },
+  ];
+
+  readonly contractRecords = [
+    {
+      title: 'Transición profesional',
+      date: '01/06/2026',
+      sessions: '6 sesiones estimadas',
+      status: 'Activo',
+      objectives: 'Clarificar opciones, preparar decisiones y sostener el plan de cambio.',
+    },
+    {
+      title: 'Liderazgo y prioridades',
+      date: '20/04/2026',
+      sessions: '4 sesiones estimadas',
+      status: 'Cerrado',
+      objectives: 'Trabajar límites, delegación y comunicación con el equipo.',
+    },
+  ];
+
+  readonly goalRecords = [
+    {
+      title: 'Preparar conversación pendiente',
+      due: 'Antes de la próxima sesión',
+      status: 'En curso',
+    },
+    {
+      title: 'Definir tres criterios de decisión',
+      due: 'Esta semana',
+      status: 'Pendiente',
+    },
+    {
+      title: 'Registrar situaciones de sobrecarga',
+      due: 'Durante 7 días',
+      status: 'En curso',
+    },
+    {
+      title: 'Revisar límites de disponibilidad',
+      due: 'Próximos 10 días',
+      status: 'Pendiente',
+    },
+    {
+      title: 'Escribir aprendizajes de cierre',
+      due: 'Tras cada sesión',
+      status: 'Activo',
+    },
+  ];
+
   readonly months = this.buildMonths();
   readonly slots = this.buildSlots();
 
@@ -120,6 +257,7 @@ export class AppComponent {
   currentMonthIndex = 0;
   selectedDate = this.slots[0]?.date ?? this.formatDate(new Date());
   selectedTier: PriceTierName | 'Todas' = 'Todas';
+  selectedDeskFolder = 'sessions';
   activeTestimonialIndex = 0;
   pendingSlot: SessionSlot | null = null;
   nextSession: SessionSlot | null = null;

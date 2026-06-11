@@ -307,6 +307,143 @@
         </div>
       </aside>
     </section>
+    <section class="desk-section" aria-labelledby="desk-title">
+      <div class="desk-header">
+        <div>
+          <p class="eyebrow">Mi escritorio</p>
+          <h2 id="desk-title">Tu espacio de trabajo personal.</h2>
+        </div>
+        <p>
+          Consulta tus sesiones, notas, contratos y objetivos de seguimiento desde una zona privada pensada para trabajar entre citas.
+        </p>
+      </div>
+
+      <div class="desk-layout">
+        <div class="folder-grid" aria-label="Carpetas del escritorio">
+          @for (folder of deskFolders; track folder.id) {
+            <button
+              type="button"
+              class="folder-card"
+              [class.active]="selectedDeskFolder === folder.id"
+              (click)="selectedDeskFolder = folder.id"
+            >
+              <span class="folder-icon" aria-hidden="true"></span>
+              <span>
+                <strong>{{ folder.title }}</strong>
+                <small>{{ folder.description }}</small>
+              </span>
+              <em>{{ folder.count }}</em>
+            </button>
+          }
+        </div>
+
+        <section class="desk-window" aria-live="polite">
+          @switch (selectedDeskFolder) {
+            @case ('sessions') {
+              <div class="window-heading">
+                <div>
+                  <p class="eyebrow">Mis sesiones</p>
+                  <h3>Histórico de sesiones</h3>
+                </div>
+                <button class="window-action" type="button">
+                  <span aria-hidden="true">+</span>
+                  Añadir observación
+                </button>
+              </div>
+              <div class="table-list">
+                @for (session of sessionRecords; track session.date + session.time) {
+                  <article class="session-card">
+                    <div class="session-date-block">
+                      <strong>{{ session.date }}</strong>
+                      <span>{{ session.time }} h</span>
+                    </div>
+                    <div class="session-main">
+                      <div class="session-meta-row">
+                        <span>Coste: <strong>{{ session.cost }}</strong></span>
+                        <span>Acuerdo: <strong>{{ session.agreementTitle }}</strong></span>
+                      </div>
+                      <p>{{ session.observations }}</p>
+                    </div>
+                  </article>
+                }
+              </div>
+            }
+            @case ('notes') {
+              <div class="window-heading">
+                <div>
+                  <p class="eyebrow">Mis notas</p>
+                  <h3>Anotaciones personales</h3>
+                </div>
+                <button class="window-action" type="button">
+                  <span aria-hidden="true">+</span>
+                  Nueva nota
+                </button>
+              </div>
+              <div class="note-list">
+                @for (note of noteRecords; track note.date) {
+                  <article class="note-card">
+                    <strong>{{ note.date }}</strong>
+                    <p>{{ note.text }}</p>
+                  </article>
+                }
+              </div>
+            }
+            @case ('contracts') {
+              <div class="window-heading">
+                <div>
+                  <p class="eyebrow">Acuerdo de acompañamiento</p>
+                  <h3>Acuerdos de acompañamiento</h3>
+                </div>
+                <button class="window-action" type="button">
+                  <span aria-hidden="true">+</span>
+                  Nuevo acuerdo
+                </button>
+              </div>
+              <div class="contract-list">
+                @for (contract of contractRecords; track contract.title) {
+                  <article class="contract-card">
+                    <div class="contract-card-header">
+                      <div>
+                        <strong>{{ contract.title }}</strong>
+                        <span>{{ contract.date }} · {{ contract.sessions }}</span>
+                      </div>
+                      <button class="download-document" type="button" aria-label="Descargar acuerdo de acompañamiento en PDF" title="Descargar PDF">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                          <path d="M5 20h14v-2H5v2Zm7-18v10.2l3.6-3.6L17 10l-5 5-5-5 1.4-1.4 3.6 3.6V2h2Z" />
+                        </svg>
+                      </button>
+                    </div>
+                    <em>{{ contract.status }}</em>
+                    <p>{{ contract.objectives }}</p>
+                  </article>
+                }
+              </div>
+            }
+            @case ('goals') {
+              <div class="window-heading">
+                <div>
+                  <p class="eyebrow">Objetivos y seguimiento</p>
+                  <h3>Acciones acordadas</h3>
+                </div>
+                <button class="window-action" type="button">
+                  <span aria-hidden="true">+</span>
+                  Nuevo objetivo
+                </button>
+              </div>
+              <div class="goal-list">
+                @for (goal of goalRecords; track goal.title) {
+                  <article class="goal-card">
+                    <span>{{ goal.status }}</span>
+                    <strong>{{ goal.title }}</strong>
+                    <small>{{ goal.due }}</small>
+                  </article>
+                }
+              </div>
+            }
+          }
+        </section>
+      </div>
+    </section>
   </main>
 
 
