@@ -753,6 +753,36 @@ blockquote {
   margin-top: 1.6rem;
 }
 
+.identification-form {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+.identification-form label {
+  color: var(--teal);
+  display: grid;
+  font-size: 0.86rem;
+  font-weight: 900;
+  gap: 0.35rem;
+}
+
+.identification-form input {
+  background: #fbfaf7;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--teal);
+  font: inherit;
+  min-height: 44px;
+  padding: 0.7rem 0.8rem;
+}
+
+.identification-form input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(36, 79, 75, 0.12);
+  outline: none;
+}
+
 @media (max-width: 1080px) {
   .hero-section,
   .intro-section,
@@ -1136,6 +1166,34 @@ blockquote {
   gap: 0.75rem;
 }
 
+.session-tabs {
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: inline-grid;
+  gap: 0.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 0 1rem;
+  padding: 0.25rem;
+}
+
+.session-tabs button {
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 900;
+  min-height: 36px;
+  padding: 0.45rem 0.85rem;
+}
+
+.session-tabs button.active {
+  background: var(--white);
+  box-shadow: 0 1px 6px rgba(24, 33, 31, 0.08);
+  color: var(--teal);
+}
+
 .session-card {
   align-items: stretch;
   background: var(--white);
@@ -1185,11 +1243,54 @@ blockquote {
   color: var(--teal);
 }
 
+.session-meta-row em {
+  background: #e5eeeb;
+  border-radius: 999px;
+  color: var(--teal);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 900;
+  padding: 0.15rem 0.55rem;
+}
+
+.upcoming-session-card {
+  border-color: rgba(36, 79, 75, 0.26);
+}
+
 .session-card p,
 .note-list p,
 .contract-list p {
   color: var(--muted);
   margin-bottom: 0;
+}
+
+.session-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.session-action-button {
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 900;
+  min-height: 34px;
+  padding: 0.42rem 0.75rem;
+}
+
+.session-action-button.danger {
+  background: #f8eeee;
+  border-color: #ead3d3;
+  color: #8a3a35;
+}
+
+.session-action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .note-list article,
@@ -1278,6 +1379,11 @@ blockquote {
 
   .window-action {
     justify-content: center;
+  }
+
+  .session-tabs {
+    display: grid;
+    width: 100%;
   }
 
 

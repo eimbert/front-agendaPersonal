@@ -1,0 +1,64 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260615112821
+Nombre de usuario: DOMHESNT\eimbertb
+Usuario RunAs: DOMHESNT\eimbertb
+Nombre de la configuración: 
+Máquina: P4INFORAAA1 (Microsoft Windows NT 10.0.26200.0)
+Aplicación host: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+Get-Content -Path src\app\app.component.scss | Select-Object -Skip 420 -First 180
+Id. de proceso: 110564
+PSVersion: 5.1.26100.8115
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8115
+BuildVersion: 10.0.26100.8115
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+**********************
+Hora de inicio del comando: 20260615112821
+**********************
+PS>try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+Get-Content -Path src\app\app.component.scss | Select-Object -Skip 420 -First 180
+**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260615112822
+Nombre de usuario: DOMHESNT\eimbertb
+Usuario RunAs: DOMHESNT\eimbertb
+Nombre de la configuración: 
+Máquina: P4INFORAAA1 (Microsoft Windows NT 10.0.26200.0)
+Aplicación host: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+Get-Content -Path src\app\app.component.scss | Select-Object -Skip 420 -First 180
+Id. de proceso: 110564
+PSVersion: 5.1.26100.8115
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8115
+BuildVersion: 10.0.26100.8115
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+**********************
+Hora de inicio del comando: 20260615112822
+**********************
+PS>Out-String
+El término 'Out-String' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable. Compruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e inténtelo de nuevo.
+>> ErrorTerminación(): "El término 'Out-String' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable. Compruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e inténtelo de nuevo."
+El término 'Out-String' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable.
+Compruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e
+inténtelo de nuevo.
+    + CategoryInfo          : ObjectNotFound: (Out-String:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+**********************
+Hora de inicio del comando: 20260615112823
+**********************
+PS>$global:?
+False
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260615112823
+**********************

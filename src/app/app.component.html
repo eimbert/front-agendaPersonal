@@ -12,7 +12,7 @@
       <a href="#proposito">Propósito</a>
     </nav>
 
-    <button class="nav-cta" type="button" (click)="openPrivateArea()">Acceso clientes</button>
+    <button class="nav-cta" type="button" (click)="requestPrivateAreaAccess()">Acceso clientes</button>
   </header>
 
   <main>
@@ -140,7 +140,7 @@
           Las reservas, notas personales y valoraciones posteriores se consultan en una pantalla de trabajo independiente.
         </p>
       </div>
-      <button class="button primary" type="button" (click)="openPrivateArea()">
+      <button class="button primary" type="button" (click)="requestPrivateAreaAccess()">
         Entrar al área privada
       </button>
     </section>
@@ -343,28 +343,85 @@
               <div class="window-heading">
                 <div>
                   <p class="eyebrow">Mis sesiones</p>
-                  <h3>Histórico de sesiones</h3>
+                  <h3>{{ selectedSessionView === 'history' ? 'Histórico de sesiones' : 'Próximas sesiones' }}</h3>
                 </div>
-                <button class="window-action" type="button">
-                  <span aria-hidden="true">+</span>
-                  Añadir observación
+              </div>
+              <div class="session-tabs" role="tablist" aria-label="Vista de sesiones">
+                <button
+                  type="button"
+                  role="tab"
+                  [attr.aria-selected]="selectedSessionView === 'history'"
+                  [class.active]="selectedSessionView === 'history'"
+                  (click)="selectedSessionView = 'history'"
+                >
+                  Histórico de sesiones
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  [attr.aria-selected]="selectedSessionView === 'upcoming'"
+                  [class.active]="selectedSessionView === 'upcoming'"
+                  (click)="selectedSessionView = 'upcoming'"
+                >
+                  Próximas sesiones
                 </button>
               </div>
               <div class="table-list">
-                @for (session of sessionRecords; track session.date + session.time) {
-                  <article class="session-card">
-                    <div class="session-date-block">
-                      <strong>{{ session.date }}</strong>
-                      <span>{{ session.time }} h</span>
-                    </div>
-                    <div class="session-main">
-                      <div class="session-meta-row">
-                        <span>Coste: <strong>{{ session.cost }}</strong></span>
-                        <span>Acuerdo: <strong>{{ session.agreementTitle }}</strong></span>
+                @if (selectedSessionView === 'history') {
+                  @for (session of sessionRecords; track session.date + session.time) {
+                    <article class="session-card">
+                      <div class="session-date-block">
+                        <strong>{{ session.date }}</strong>
+                        <span>{{ session.time }} h</span>
                       </div>
-                      <p>{{ session.observations }}</p>
-                    </div>
-                  </article>
+                      <div class="session-main">
+                        <div class="session-meta-row">
+                          <span>Coste: <strong>{{ session.cost }}</strong></span>
+                          <span>Acuerdo: <strong>{{ session.agreementTitle }}</strong></span>
+                        </div>
+                        <p>{{ session.observations }}</p>
+                        <div class="session-actions">
+                          <button class="session-action-button" type="button">
+                            Añadir/modificar observación
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  }
+                } @else {
+                  @for (session of upcomingSessionRecords; track session.date + session.time) {
+                    <article class="session-card upcoming-session-card">
+                      <div class="session-date-block">
+                        <strong>{{ session.date }}</strong>
+                        <span>{{ session.time }} h</span>
+                      </div>
+                      <div class="session-main">
+                        <div class="session-meta-row">
+                          <span>Coste: <strong>{{ session.cost }}</strong></span>
+                          <span>Acuerdo: <strong>{{ session.agreementTitle }}</strong></span>
+                          <em>{{ session.status }}</em>
+                        </div>
+                        <p>{{ session.observations }}</p>
+                        <div class="session-actions">
+                          <button
+                            class="session-action-button danger"
+                            type="button"
+                            [disabled]="!canCancelUpcomingSession(session.date, session.time)"
+                            [title]="
+                              canCancelUpcomingSession(session.date, session.time)
+                                ? 'Cancelar sesión'
+                                : 'No se puede cancelar con menos de 24 horas'
+                            "
+                          >
+                            Cancelar
+                          </button>
+                          <button class="session-action-button" type="button">
+                            Añadir/modificar observación
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  }
                 }
               </div>
             }
@@ -446,7 +503,6 @@
     </section>
   </main>
 
-
   @if (cancellationPending && nextSession) {
     <div class="modal-backdrop" role="presentation" (click)="dismissCancelNextSession()">
       <section class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="cancel-title" (click)="$event.stopPropagation()">
@@ -484,4 +540,44 @@
       </section>
     </div>
   }
+}
+
+@if (identificationPending) {
+  <div class="modal-backdrop" role="presentation" (click)="dismissIdentificationDialog()">
+    <section class="confirm-dialog identification-dialog" role="dialog" aria-modal="true" aria-labelledby="identification-title" (click)="$event.stopPropagation()">
+      <p class="eyebrow">Área cliente</p>
+      <h2 id="identification-title">Identificación de cliente</h2>
+      <p>
+        Introduce tus datos para acceder a tu espacio personal. Por ahora el acceso queda abierto mientras preparamos la seguridad definitiva.
+      </p>
+
+      <form class="identification-form" (ngSubmit)="confirmIdentification()">
+        <label>
+          Email
+          <input
+            type="email"
+            name="clientEmail"
+            autocomplete="email"
+            [(ngModel)]="identificationEmail"
+            placeholder="tu@email.com"
+          />
+        </label>
+        <label>
+          Código de acceso
+          <input
+            type="text"
+            name="clientAccessCode"
+            autocomplete="one-time-code"
+            [(ngModel)]="identificationCode"
+            placeholder="Opcional por ahora"
+          />
+        </label>
+
+        <div class="dialog-actions">
+          <button class="button secondary" type="button" (click)="dismissIdentificationDialog()">Cancelar</button>
+          <button class="button primary" type="submit">Entrar</button>
+        </div>
+      </form>
+    </section>
+  </div>
 }

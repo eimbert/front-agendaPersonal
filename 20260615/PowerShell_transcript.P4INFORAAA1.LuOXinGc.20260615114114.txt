@@ -1,0 +1,34 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260615114114
+Nombre de usuario: DOMHESNT\eimbertb
+Usuario RunAs: DOMHESNT\eimbertb
+Nombre de la configuración: 
+Máquina: P4INFORAAA1 (Microsoft Windows NT 10.0.26200.0)
+Aplicación host: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+cmd /c findstr /n /c:"modal-backdrop" /c:"confirm-dialog" /c:"dialog-actions" src\app\app.component.html src\app\app.component.scss
+Id. de proceso: 100300
+PSVersion: 5.1.26100.8115
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8115
+BuildVersion: 10.0.26100.8115
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+**********************
+Hora de inicio del comando: 20260615114114
+**********************
+PS>try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+cmd /c findstr /n /c:"modal-backdrop" /c:"confirm-dialog" /c:"dialog-actions" src\app\app.component.html src\app\app.component.scss
+
+**********************
+Hora de inicio del comando: 20260615114115
+**********************
+PS>$global:?
+True
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260615114115
+**********************

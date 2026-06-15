@@ -118,8 +118,8 @@ export class AppComponent {
     {
       id: 'sessions',
       title: 'Mis sesiones',
-      description: 'Histórico, coste y observaciones',
-      count: '6',
+      description: 'Histórico, próximas citas y observaciones',
+      count: '9',
     },
     {
       id: 'notes',
@@ -183,6 +183,33 @@ export class AppComponent {
       cost: '75 EUR',
       agreementTitle: 'Cambio vital',
       observations: 'Primera revisión de objetivos, expectativas del proceso y compromiso entre sesiones.',
+    },
+  ];
+
+  readonly upcomingSessionRecords = [
+    {
+      date: '19/06/2026',
+      time: '11:00',
+      cost: '75 EUR',
+      agreementTitle: 'Transición profesional',
+      status: 'Confirmada',
+      observations: 'Revisar criterios de decisión y preparar el mapa de conversaciones clave.',
+    },
+    {
+      date: '03/07/2026',
+      time: '17:00',
+      cost: '95 EUR',
+      agreementTitle: 'Transición profesional',
+      status: 'Pendiente de preparación',
+      observations: 'Traer avances del plan y dudas que hayan aparecido durante la implementación.',
+    },
+    {
+      date: '17/07/2026',
+      time: '09:30',
+      cost: '55 EUR',
+      agreementTitle: 'Cambio vital',
+      status: 'Reservada',
+      observations: 'Sesión de seguimiento para valorar energía, límites y ajustes de ritmo.',
     },
   ];
 
@@ -258,9 +285,13 @@ export class AppComponent {
   selectedDate = this.slots[0]?.date ?? this.formatDate(new Date());
   selectedTier: PriceTierName | 'Todas' = 'Todas';
   selectedDeskFolder = 'sessions';
+  selectedSessionView: 'history' | 'upcoming' = 'history';
   activeTestimonialIndex = 0;
   pendingSlot: SessionSlot | null = null;
   nextSession: SessionSlot | null = null;
+  identificationPending = false;
+  identificationEmail = '';
+  identificationCode = '';
   cancellationPending = false;
   reservedSlotId = '';
   reservationMessage = '';
@@ -346,6 +377,15 @@ export class AppComponent {
     return Date.now() < cancellationLimit;
   }
 
+  canCancelUpcomingSession(date: string, time: string): boolean {
+    const [day, month, year] = date.split('/').map(Number);
+    const [hours, minutes] = time.split(':').map(Number);
+    const sessionDate = new Date(year, month - 1, day, hours, minutes, 0, 0);
+    const cancellationLimit = sessionDate.getTime() - 24 * 60 * 60 * 1000;
+
+    return Date.now() < cancellationLimit;
+  }
+
   previousMonth(): void {
     if (this.currentMonthIndex > 0) {
       this.currentMonthIndex -= 1;
@@ -374,9 +414,25 @@ export class AppComponent {
     this.reservationMessage = '';
   }
 
+  requestPrivateAreaAccess(): void {
+    this.identificationPending = true;
+    this.pendingSlot = null;
+    this.cancellationPending = false;
+  }
+
+  dismissIdentificationDialog(): void {
+    this.identificationPending = false;
+  }
+
+  confirmIdentification(): void {
+    this.identificationPending = false;
+    this.openPrivateArea();
+  }
+
   openPrivateArea(): void {
     this.currentPage = 'client';
     this.pendingSlot = null;
+    this.identificationPending = false;
     this.cancellationPending = false;
     this.reservationMessage = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -385,6 +441,7 @@ export class AppComponent {
   goHome(): void {
     this.currentPage = 'home';
     this.pendingSlot = null;
+    this.identificationPending = false;
     this.cancellationPending = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
